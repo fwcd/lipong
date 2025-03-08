@@ -11,6 +11,7 @@ pub struct State<const W: usize, const H: usize> {
     paddle_color: Color,
     net_color: Color,
     digit_color: Color,
+    ball_color: Color,
 }
 
 impl<const W: usize, const H: usize> State<W, H> {
@@ -21,6 +22,7 @@ impl<const W: usize, const H: usize> State<W, H> {
             paddle_color: Color::WHITE,
             net_color: Color::GRAY,
             digit_color: Color::GREEN,
+            ball_color: Color::WHITE,
         }
     }
 
@@ -46,6 +48,7 @@ impl<const W: usize, const H: usize> State<W, H> {
         self.render_scores(&mut frame);
         self.render_net(&mut frame);
         self.render_paddles(&mut frame);
+        self.render_ball(&mut frame);
         frame
     }
 
@@ -67,6 +70,11 @@ impl<const W: usize, const H: usize> State<W, H> {
                 }
             }
         }
+    }
+
+    fn render_ball(&self, frame: &mut Frame) {
+        let pos = self.board.ball().grid_pos();
+        frame.set(pos.x as usize, pos.y as usize, self.ball_color);
     }
 
     fn render_scores(&self, frame: &mut Frame) {

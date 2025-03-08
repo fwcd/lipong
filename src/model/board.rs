@@ -94,6 +94,10 @@ impl<const W: usize, const H: usize> Board<W, H> {
         }
     }
 
+    pub fn ball(&self) -> &Ball {
+        &self.ball
+    }
+
     pub fn paddles(&self) -> &[Paddle; PLAYER_COUNT] {
         &self.paddles
     }
