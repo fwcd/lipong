@@ -48,37 +48,37 @@ impl<const W: usize, const H: usize> Board<W, H> {
     }
 
     pub fn tick_ball(&mut self) -> Option<usize> {
-        let mut ball = self.ball;
-        ball.apply_velocity();
+        let mut next_ball = self.ball;
+        next_ball.apply_velocity();
 
-        if let Some(dir) = Self::colliding_wall_normal(ball) {
+        if let Some(dir) = Self::colliding_wall_normal(next_ball) {
             match dir {
                 Direction::Left => return Some(0),
                 Direction::Right => return Some(1),
                 _ => {},
             }
 
-            ball.bounce(dir);
+            self.ball.bounce(dir);
+        } else if let Some(dir) = self.colliding_paddle_normal(next_ball) {
+            self.ball.bounce(dir); // TODO: Randomize direction
         }
 
-        if let Some(dir) = self.colliding_paddle_normal(ball) {
-            ball.bounce(dir); // TODO: Randomize direction
-        }
+        self.ball.apply_velocity();
+        assert!(Self::bounds().contains(self.ball.grid_pos()));
 
-        self.ball = ball;
         None
     }
 
     fn colliding_wall_normal(ball: Ball) -> Option<Direction> {
-        let pos = ball.exact_pos();
-        if pos.x < 0.0 {
-            Some(Direction::Down)
-        } else if pos.x >= W as f64 {
-            Some(Direction::Up)
-        } else if pos.y < 0.0 {
+        let pos = ball.grid_pos();
+        if pos.x < 0 {
             Some(Direction::Right)
-        } else if pos.y >= H as f64 {
+        } else if pos.x >= W as i32 - 1 {
             Some(Direction::Left)
+        } else if pos.y < 0 {
+            Some(Direction::Down)
+        } else if pos.y >= H as i32 - 1 {
+            Some(Direction::Up)
         } else {
             None
         }

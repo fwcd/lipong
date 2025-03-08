@@ -1,4 +1,5 @@
 use lighthouse_client::protocol::{Color, Delta, Direction, Frame, Pos};
+use tracing::info;
 
 use crate::model::PLAYER_COUNT;
 
@@ -38,6 +39,7 @@ impl<const W: usize, const H: usize> State<W, H> {
 
     pub fn tick(&mut self) {
         if let Some(goal_scorer) = self.board.tick_ball() {
+            info!("Goal for player {} (scores: {} : {}), respawning ball...", goal_scorer + 1, self.scores[0], self.scores[1]);
             self.scores[goal_scorer] += 1;
             self.board.respawn_ball();
         }

@@ -27,6 +27,6 @@ impl Ball {
     }
 
     pub fn grid_pos(&self) -> Pos<i32> {
-        self.pos.map(|c| c.round() as i32)
+        self.pos.map(|c| c as i32)
     }
 }
