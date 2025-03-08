@@ -7,7 +7,10 @@ use tracing::debug;
 
 use crate::model::State;
 
-pub async fn run(lh: Lighthouse<TokioWebSocket>, shared_state: Arc<Mutex<State>>) -> Result<()> {
+pub async fn run<const W: usize, const H: usize>(
+    lh: Lighthouse<TokioWebSocket>,
+    shared_state: Arc<Mutex<State<W, H>>>,
+) -> Result<()> {
     loop {
         let frame = {
             let mut state = shared_state.lock().await;

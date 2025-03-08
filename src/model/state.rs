@@ -1,13 +1,17 @@
 use lighthouse_client::protocol::{Color, Frame};
 
+use super::Board;
+
 #[derive(Debug, PartialEq, Eq, Clone)]
-pub struct State {
-    // FIXME: Add the game/app state here
+pub struct State<const W: usize, const H: usize> {
+    board: Board<W, H>,
 }
 
-impl State {
+impl<const W: usize, const H: usize> State<W, H> {
     pub fn new() -> Self {
-        Self {}
+        Self {
+            board: Board::new(),
+        }
     }
 
     pub fn tick(&mut self) {
