@@ -1,6 +1,6 @@
 use std::f64::consts::TAU;
 
-use lighthouse_client::protocol::{Rect, Vec2, LIGHTHOUSE_RECT};
+use lighthouse_client::protocol::{Rect, Vec2, Zero};
 
 use super::{Ball, Paddle, PLAYER_COUNT};
 
@@ -17,11 +17,15 @@ impl<const W: usize, const H: usize> Board<W, H> {
 
         Self {
             paddles: [
-                Paddle::new(Rect::new(LIGHTHOUSE_RECT.center_left() + Vec2::new(padding, 0), paddle_size)),
-                Paddle::new(Rect::new(LIGHTHOUSE_RECT.center_right() - Vec2::new(padding + 1, 0), paddle_size)),
+                Paddle::new(Rect::new(Self::bounds().center_left() + Vec2::new(padding, 0), paddle_size)),
+                Paddle::new(Rect::new(Self::bounds().center_right() - Vec2::new(padding + 1, 0), paddle_size)),
             ],
             ball: Self::new_ball(),
         }
+    }
+
+    pub fn bounds() -> Rect<i32> {
+        Rect::new(Vec2::ZERO, Vec2::new(W as i32, H as i32))
     }
 
     fn new_ball() -> Ball {
