@@ -29,9 +29,10 @@ impl<const W: usize, const H: usize> Board<W, H> {
     }
 
     fn new_ball() -> Ball {
+        let speed = 0.02;
         let angle = rand::random_range(0.0..=TAU);
         let pos = Vec2::new((W / 2) as f64, (H / 2) as f64);
-        let delta = Vec2::new(angle.cos(), angle.sin());
+        let delta = Vec2::new(angle.cos(), angle.sin()).map(|c| c * speed);
         Ball::new(pos, delta)
     }
 
