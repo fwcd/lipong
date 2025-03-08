@@ -2,7 +2,7 @@ use std::{collections::HashMap, sync::Arc};
 
 use anyhow::Result;
 use futures::{prelude::*, Stream};
-use lighthouse_client::protocol::{EventSource, InputEvent, ServerMessage};
+use lighthouse_client::protocol::{EventSource, GamepadButtonEvent, GamepadControlEvent, GamepadEvent, InputEvent, ServerMessage};
 use tokio::sync::Mutex;
 use tracing::info;
 
@@ -27,7 +27,9 @@ pub async fn run<const W: usize, const H: usize>(
                     state.move_paddle(1, dir);
                 }
             },
-            InputEvent::Gamepad(gamepad) => {
+            InputEvent::Gamepad(gamepad) if !matches!(gamepad, GamepadEvent { control: GamepadControlEvent::Button(GamepadButtonEvent { down: false, .. }), .. }) => {
+                // TODO: Improve gamepad mechanics (e.g. keep moving paddle when key is held)
+
                 let opt_dir = gamepad.direction();
                 let source = gamepad.source;
 
