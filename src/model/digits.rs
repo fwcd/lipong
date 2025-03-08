@@ -1,5 +1,8 @@
+pub const DIGIT_WIDTH: usize = 3;
+pub const DIGIT_HEIGHT: usize = 5;
+
 /// Seven-segment-display-style representations of the digits from 0 to 9 (inclusive).
-pub const DIGITS: [[[u8; 3]; 5]; 10] = [
+pub const DIGITS: [[[u8; DIGIT_WIDTH]; DIGIT_HEIGHT]; 10] = [
     [ // 0
         [1, 1, 1],
         [1, 0, 1],
