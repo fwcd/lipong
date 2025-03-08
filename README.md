@@ -5,6 +5,8 @@
 
 Pong for Project Lighthouse.
 
+<img src="screenshot.png" width="300">
+
 ## Building
 
 To build the project, run
