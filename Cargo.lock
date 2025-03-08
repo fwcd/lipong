@@ -807,9 +807,9 @@ checksum = "875b3680cb2f8f71bdcf9a30f38d48282f5d3c95cbf9b3fa57269bb5d5c06828"
 
 [[package]]
 name = "lighthouse-client"
-version = "5.1.0"
+version = "5.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8b8f80b963cfaa9286a91cb6bdb09b4eeabafc8fec028b2789d8565a37ef94d3"
+checksum = "06d12a78db40144359397d176789f9a21621727a831b4bc3212361fb855a95a5"
 dependencies = [
  "async-tungstenite",
  "futures",
@@ -826,9 +826,9 @@ dependencies = [
 
 [[package]]
 name = "lighthouse-protocol"
-version = "5.1.0"
+version = "5.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3c5e7b5425a480372a5268b94f3548bc1340cca16efe3d2250ef425366f2cf3f"
+checksum = "cd4c15bb3a7d342e87b5ad515e8fd006952e24245b507eae7650cdc6194dc68f"
 dependencies = [
  "rand",
  "rmpv",
