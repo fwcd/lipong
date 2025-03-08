@@ -27,6 +27,7 @@ impl Paddle {
     }
 
     pub fn in_bounds(&self, rect: Rect<i32>) -> bool {
-        rect.contains(rect.top_left()) && rect.contains(rect.bottom_right() - Vec2::new(1, 1))
+        let bounds = self.bounds;
+        rect.contains(bounds.top_left()) && rect.contains(bounds.bottom_right() - Vec2::new(1, 1))
     }
 }
