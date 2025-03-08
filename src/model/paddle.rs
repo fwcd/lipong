@@ -1,13 +1,13 @@
-use lighthouse_client::protocol::Rect;
+use lighthouse_client::protocol::{Rect, Vec2};
 
 use super::Ball;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct Paddle<const H: usize> {
+pub struct Paddle {
     bounds: Rect<i32>,
 }
 
-impl<const H: usize> Paddle<H> {
+impl Paddle {
     pub fn new(bounds: Rect<i32>) -> Self {
         Self {
             bounds,
@@ -23,10 +23,10 @@ impl<const H: usize> Paddle<H> {
     }
 
     pub fn move_by(&mut self, dy: i32) {
-        let mut new_bounds = self.bounds;
-        new_bounds.origin.y += dy;
-        if new_bounds.top_left().y >= 0 && new_bounds.bottom_left().y < H as i32 {
-            self.bounds = new_bounds;
-        }
+        self.bounds.origin.y += dy;
+    }
+
+    pub fn in_bounds(&self, rect: Rect<i32>) -> bool {
+        rect.contains(rect.top_left()) && rect.contains(rect.bottom_right() - Vec2::new(1, 1))
     }
 }

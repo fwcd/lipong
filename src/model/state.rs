@@ -28,8 +28,8 @@ impl<const W: usize, const H: usize> State<W, H> {
         assert!(i < PLAYER_COUNT);
         let speed = 1;
         match dir {
-            Direction::Up => self.board.paddle_mut(i).move_by(-speed),
-            Direction::Down => self.board.paddle_mut(i).move_by(speed),
+            Direction::Up => self.board.move_paddle(i, -speed),
+            Direction::Down => self.board.move_paddle(i, speed),
             _ => {},
         };
     }

@@ -6,7 +6,7 @@ use super::{Ball, Paddle, PLAYER_COUNT};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Board<const W: usize, const H: usize> {
-    paddles: [Paddle<H>; PLAYER_COUNT],
+    paddles: [Paddle; PLAYER_COUNT],
     ball: Ball,
 }
 
@@ -35,16 +35,15 @@ impl<const W: usize, const H: usize> Board<W, H> {
         Ball::new(pos, delta)
     }
 
-    pub fn paddles(&self) -> &[Paddle<H>; PLAYER_COUNT] {
+    pub fn move_paddle(&mut self, i: usize, dy: i32) {
+        let mut paddle: Paddle = self.paddles[i];
+        paddle.move_by(dy);
+        if paddle.in_bounds(Self::bounds()) {
+            self.paddles[i] = paddle;
+        }
+    }
+
+    pub fn paddles(&self) -> &[Paddle; PLAYER_COUNT] {
         &self.paddles
-    }
-
-    #[allow(unused)]
-    pub fn paddle(&self, i: usize) -> &Paddle<H> {
-        &self.paddles[i]
-    }
-
-    pub fn paddle_mut(&mut self, i: usize) -> &mut Paddle<H> {
-        &mut self.paddles[i]
     }
 }
