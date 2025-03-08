@@ -1,7 +1,10 @@
 [package]
 name = "lipong"
+description = "Pong for Project Lighthouse"
 version = "0.0.2"
 edition = "2021"
+license = "MIT"
+repository = "https://github.com/fwcd/lipong"
 
 [dependencies]
 anyhow = "1.0.97"
