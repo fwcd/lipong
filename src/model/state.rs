@@ -8,6 +8,7 @@ use super::Board;
 pub struct State<const W: usize, const H: usize> {
     board: Board<W, H>,
     paddle_color: Color,
+    net_color: Color,
 }
 
 impl<const W: usize, const H: usize> State<W, H> {
@@ -15,6 +16,7 @@ impl<const W: usize, const H: usize> State<W, H> {
         Self {
             board: Board::new(),
             paddle_color: Color::WHITE,
+            net_color: Color::GRAY,
         }
     }
 
@@ -34,7 +36,19 @@ impl<const W: usize, const H: usize> State<W, H> {
 
     pub fn render(&self) -> Frame {
         let mut frame = Frame::empty();
+        self.render_net(&mut frame);
+        self.render_paddles(&mut frame);
+        frame
+    }
 
+    fn render_net(&self, frame: &mut Frame) {
+        let x = W / 2;
+        for y in 0..H {
+            frame.set(x, y, self.net_color);
+        }
+    }
+
+    fn render_paddles(&self, frame: &mut Frame) {
         for paddle in self.board.paddles() {
             let bounds = paddle.bounds();
             for dy in 0..bounds.height() {
@@ -45,7 +59,5 @@ impl<const W: usize, const H: usize> State<W, H> {
                 }
             }
         }
-
-        frame
     }
 }
