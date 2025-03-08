@@ -18,7 +18,7 @@ impl Paddle {
         self.bounds
     }
 
-    pub fn contains(&self, ball: Ball) -> bool {
+    pub fn collides_with(&self, ball: Ball) -> bool {
         self.bounds.contains(ball.grid_pos())
     }
 

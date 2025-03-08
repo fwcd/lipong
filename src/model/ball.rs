@@ -1,6 +1,6 @@
 use lighthouse_client::protocol::{Delta, Direction, Pos};
 
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, Copy, PartialEq)]
 pub struct Ball {
     pos: Pos<f64>,
     velocity: Delta<f64>,
@@ -20,6 +20,10 @@ impl Ball {
             Direction::Left | Direction::Right => self.velocity.x *= -1.0,
             Direction::Up | Direction::Down => self.velocity.y *= -1.0,
         }
+    }
+
+    pub fn exact_pos(&self) -> Pos<f64> {
+        self.pos
     }
 
     pub fn grid_pos(&self) -> Pos<i32> {

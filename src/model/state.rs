@@ -35,8 +35,10 @@ impl<const W: usize, const H: usize> State<W, H> {
     }
 
     pub fn tick(&mut self) {
-        // FIXME: Update the state here, i.e. implement game logic that needs to run on every tick
-        self.scores[0] += 1;
+        if let Some(goal_scorer) = self.board.tick_ball() {
+            self.scores[goal_scorer] += 1;
+            self.board.respawn_ball();
+        }
     }
 
     pub fn render(&self) -> Frame {
