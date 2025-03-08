@@ -2,10 +2,10 @@ use std::sync::Arc;
 
 use anyhow::Result;
 use lighthouse_client::{Lighthouse, TokioWebSocket};
-use tokio::sync::Mutex;
+use tokio::{sync::Mutex, time};
 use tracing::debug;
 
-use crate::model::State;
+use crate::model::{State, TICK_INTERVAL};
 
 pub async fn run<const W: usize, const H: usize>(
     lh: Lighthouse<TokioWebSocket>,
@@ -21,5 +21,7 @@ pub async fn run<const W: usize, const H: usize>(
         // Send the rendered model to the lighthouse
         lh.put_model(frame).await?;
         debug!("Sent frame");
+
+        time::sleep(TICK_INTERVAL).await;
     }
 }

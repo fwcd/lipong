@@ -22,10 +22,6 @@ impl Ball {
         }
     }
 
-    pub fn exact_pos(&self) -> Pos<f64> {
-        self.pos
-    }
-
     pub fn grid_pos(&self) -> Pos<i32> {
         self.pos.map(|c| c as i32)
     }
