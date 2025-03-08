@@ -1,9 +1,11 @@
+mod ball;
 mod board;
 mod constants;
 mod digits;
 mod paddle;
 mod state;
 
+pub use ball::*;
 pub use board::*;
 pub use constants::*;
 pub use digits::*;

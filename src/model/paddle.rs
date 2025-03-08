@@ -1,5 +1,7 @@
 use lighthouse_client::protocol::Rect;
 
+use super::Ball;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct Paddle<const H: usize> {
     bounds: Rect<i32>,
@@ -14,6 +16,10 @@ impl<const H: usize> Paddle<H> {
 
     pub fn bounds(&self) -> Rect<i32> {
         self.bounds
+    }
+
+    pub fn contains(&self, ball: Ball) -> bool {
+        self.bounds.contains(ball.grid_pos())
     }
 
     pub fn move_by(&mut self, dy: i32) {

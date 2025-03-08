@@ -4,7 +4,7 @@ use crate::model::PLAYER_COUNT;
 
 use super::{Board, DIGITS, DIGIT_HEIGHT, DIGIT_WIDTH};
 
-#[derive(Debug, PartialEq, Eq, Clone)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct State<const W: usize, const H: usize> {
     board: Board<W, H>,
     scores: [usize; PLAYER_COUNT],

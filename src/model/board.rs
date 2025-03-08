@@ -1,10 +1,13 @@
+use std::f64::consts::TAU;
+
 use lighthouse_client::protocol::{Rect, Vec2, LIGHTHOUSE_RECT};
 
-use super::{Paddle, PLAYER_COUNT};
+use super::{Ball, Paddle, PLAYER_COUNT};
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct Board<const W: usize, const H: usize> {
-    paddles: [Paddle<H>; PLAYER_COUNT]
+    paddles: [Paddle<H>; PLAYER_COUNT],
+    ball: Ball,
 }
 
 impl<const W: usize, const H: usize> Board<W, H> {
@@ -17,7 +20,15 @@ impl<const W: usize, const H: usize> Board<W, H> {
                 Paddle::new(Rect::new(LIGHTHOUSE_RECT.center_left() + Vec2::new(padding, 0), paddle_size)),
                 Paddle::new(Rect::new(LIGHTHOUSE_RECT.center_right() - Vec2::new(padding + 1, 0), paddle_size)),
             ],
+            ball: Self::new_ball(),
         }
+    }
+
+    fn new_ball() -> Ball {
+        let angle = rand::random_range(0.0..=TAU);
+        let pos = Vec2::new((W / 2) as f64, (H / 2) as f64);
+        let delta = Vec2::new(angle.cos(), angle.sin());
+        Ball::new(pos, delta)
     }
 
     pub fn paddles(&self) -> &[Paddle<H>; PLAYER_COUNT] {
