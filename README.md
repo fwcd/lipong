@@ -1,7 +1,7 @@
 # lipong
 
-[![crates.io](https://img.shields.io/crates/v/lisnake)](https://crates.io/crates/lisnake)
-[![Build](https://github.com/fwcd/lisnake/actions/workflows/build.yml/badge.svg)](https://github.com/fwcd/lisnake/actions/workflows/build.yml)
+[![crates.io](https://img.shields.io/crates/v/lipong)](https://crates.io/crates/lipong)
+[![Build](https://github.com/fwcd/lipong/actions/workflows/build.yml/badge.svg)](https://github.com/fwcd/lipong/actions/workflows/build.yml)
 
 Pong for Project Lighthouse.
 
