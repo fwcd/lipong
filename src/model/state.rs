@@ -1,4 +1,4 @@
-use lighthouse_client::protocol::{Color, Delta, Direction, Frame, Pos};
+use lighthouse_client::protocol::{Delta, Direction, Frame, Pos};
 use tracing::info;
 
 use crate::model::PLAYER_COUNT;
@@ -9,10 +9,6 @@ use super::{Board, Options, DIGITS, DIGIT_HEIGHT, DIGIT_WIDTH};
 pub struct State<const W: usize, const H: usize> {
     board: Board<W, H>,
     scores: [usize; PLAYER_COUNT],
-    paddle_color: Color,
-    net_color: Color,
-    digit_color: Color,
-    ball_color: Color,
     opts: Options,
 }
 
@@ -21,10 +17,6 @@ impl<const W: usize, const H: usize> State<W, H> {
         Self {
             board: Board::new(opts.ball_speed),
             scores: [0; PLAYER_COUNT],
-            paddle_color: Color::WHITE,
-            net_color: Color::GRAY,
-            digit_color: Color::GREEN,
-            ball_color: Color::WHITE,
             opts,
         }
     }
@@ -59,7 +51,7 @@ impl<const W: usize, const H: usize> State<W, H> {
     fn render_net(&self, frame: &mut Frame) {
         let x = W / 2;
         for y in 0..H {
-            frame.set(x, y, self.net_color);
+            frame.set(x, y, self.opts.net_color);
         }
     }
 
@@ -70,7 +62,7 @@ impl<const W: usize, const H: usize> State<W, H> {
                 for dx in 0..bounds.width() {
                     let x = (bounds.origin.x + dx) as usize;
                     let y = (bounds.origin.y + dy) as usize;
-                    frame.set(x, y, self.paddle_color);
+                    frame.set(x, y, self.opts.paddle_color);
                 }
             }
         }
@@ -78,7 +70,7 @@ impl<const W: usize, const H: usize> State<W, H> {
 
     fn render_ball(&self, frame: &mut Frame) {
         let pos = self.board.ball().grid_pos();
-        frame.set(pos.x as usize, pos.y as usize, self.ball_color);
+        frame.set(pos.x as usize, pos.y as usize, self.opts.ball_color);
     }
 
     fn render_scores(&self, frame: &mut Frame) {
@@ -110,7 +102,7 @@ impl<const W: usize, const H: usize> State<W, H> {
                 let x = origin.x as usize + dx;
                 let y = origin.y as usize + dy;
                 if digit[dy][dx] > 0 {
-                    frame.set(x, y, self.digit_color);
+                    frame.set(x, y, self.opts.digit_color);
                 }
             }
         }

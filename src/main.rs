@@ -23,10 +23,10 @@ struct Args {
     #[arg(long, env = "LIGHTHOUSE_URL", default_value = LIGHTHOUSE_URL)]
     url: String,
     /// The ball's speed.
-    #[arg(short, long, default_value_t = 0.75)]
+    #[arg(short, long, default_value_t = Options::default().ball_speed)]
     ball_speed: f64,
     /// The paddle input sensitivity.
-    #[arg(short, long, default_value_t = 1)]
+    #[arg(short, long, default_value_t = Options::default().paddle_sensitivity)]
     paddle_sensitivity: i32,
 }
 
@@ -41,6 +41,7 @@ async fn main() -> Result<()> {
     let opts = Options {
         ball_speed: args.ball_speed,
         paddle_sensitivity: args.paddle_sensitivity,
+        ..Default::default()
     };
 
     let state = Arc::new(Mutex::new(State::<LIGHTHOUSE_COLS, LIGHTHOUSE_ROWS>::new(opts)));
