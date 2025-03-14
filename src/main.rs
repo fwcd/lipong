@@ -25,6 +25,9 @@ struct Args {
     /// The ball's speed.
     #[arg(short, long, default_value_t = 0.75)]
     ball_speed: f64,
+    /// The paddle input sensitivity.
+    #[arg(short, long, default_value_t = 1)]
+    paddle_sensitivity: i32,
 }
 
 #[tokio::main]
@@ -37,6 +40,7 @@ async fn main() -> Result<()> {
 
     let opts = Options {
         ball_speed: args.ball_speed,
+        paddle_sensitivity: args.paddle_sensitivity,
     };
 
     let state = Arc::new(Mutex::new(State::<LIGHTHOUSE_COLS, LIGHTHOUSE_ROWS>::new(opts)));

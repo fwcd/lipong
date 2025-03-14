@@ -13,6 +13,7 @@ pub struct State<const W: usize, const H: usize> {
     net_color: Color,
     digit_color: Color,
     ball_color: Color,
+    opts: Options,
 }
 
 impl<const W: usize, const H: usize> State<W, H> {
@@ -24,12 +25,13 @@ impl<const W: usize, const H: usize> State<W, H> {
             net_color: Color::GRAY,
             digit_color: Color::GREEN,
             ball_color: Color::WHITE,
+            opts,
         }
     }
 
     pub fn move_paddle(&mut self, i: usize, dir: Direction) {
         assert!(i < PLAYER_COUNT);
-        let speed = 1;
+        let speed = self.opts.paddle_sensitivity;
         match dir {
             Direction::Up => self.board.move_paddle(i, -speed),
             Direction::Down => self.board.move_paddle(i, speed),
