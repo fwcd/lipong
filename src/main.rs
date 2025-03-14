@@ -1,7 +1,7 @@
 use anyhow::Result;
 use clap::Parser;
 use lighthouse_client::{protocol::{Authentication, LIGHTHOUSE_COLS, LIGHTHOUSE_ROWS}, Lighthouse, LIGHTHOUSE_URL};
-use model::State;
+use model::{Options, State};
 use tracing::info;
 use tokio::{sync::Mutex, task};
 use std::sync::Arc;
@@ -34,7 +34,12 @@ async fn main() -> Result<()> {
 
     let args = Args::parse();
     let auth = Authentication::new(&args.username, &args.token);
-    let state = Arc::new(Mutex::new(State::<LIGHTHOUSE_COLS, LIGHTHOUSE_ROWS>::new(args.ball_speed)));
+
+    let opts = Options {
+        ball_speed: args.ball_speed,
+    };
+
+    let state = Arc::new(Mutex::new(State::<LIGHTHOUSE_COLS, LIGHTHOUSE_ROWS>::new(opts)));
 
     let lh = Lighthouse::connect_with_tokio_to(&args.url, auth).await.unwrap();
     info!("Connected to the Lighthouse server");

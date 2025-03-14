@@ -3,7 +3,7 @@ use tracing::info;
 
 use crate::model::PLAYER_COUNT;
 
-use super::{Board, DIGITS, DIGIT_HEIGHT, DIGIT_WIDTH};
+use super::{Board, Options, DIGITS, DIGIT_HEIGHT, DIGIT_WIDTH};
 
 #[derive(Debug, PartialEq, Clone)]
 pub struct State<const W: usize, const H: usize> {
@@ -16,9 +16,9 @@ pub struct State<const W: usize, const H: usize> {
 }
 
 impl<const W: usize, const H: usize> State<W, H> {
-    pub fn new(ball_speed: f64) -> Self {
+    pub fn new(opts: Options) -> Self {
         Self {
-            board: Board::new(ball_speed),
+            board: Board::new(opts.ball_speed),
             scores: [0; PLAYER_COUNT],
             paddle_color: Color::WHITE,
             net_color: Color::GRAY,
