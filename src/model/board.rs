@@ -49,6 +49,14 @@ impl<const W: usize, const H: usize> Board<W, H> {
         }
     }
 
+    pub fn teleport_paddle(&mut self, i: usize, y: i32) {
+        let mut paddle = self.paddles[i];
+        paddle.teleport(y);
+        if paddle.in_bounds(Self::bounds()) {
+            self.paddles[i] = paddle;
+        }
+    }
+
     pub fn respawn_ball(&mut self) {
         self.ball = Self::new_ball(self.initial_ball_speed);
     }

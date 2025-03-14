@@ -2,7 +2,7 @@ use std::{collections::HashMap, sync::Arc};
 
 use anyhow::Result;
 use futures::{prelude::*, Stream};
-use lighthouse_client::protocol::{EventSource, GamepadButtonEvent, GamepadControlEvent, GamepadEvent, InputEvent, ServerMessage};
+use lighthouse_client::protocol::{EventSource, GamepadButtonEvent, GamepadControlEvent, GamepadEvent, InputEvent, ServerMessage, LIGHTHOUSE_COLS};
 use tokio::sync::Mutex;
 use tracing::info;
 
@@ -18,6 +18,12 @@ pub async fn run<const W: usize, const H: usize>(
         let input_event = msg?.payload;
 
         match input_event {
+            InputEvent::Mouse(mouse) => {
+                let mut state = shared_state.lock().await;
+
+                let i = if mouse.pos.x < LIGHTHOUSE_COLS as f64 / 2.0 { 0 } else { 1 };
+                state.teleport_paddle(i, mouse.pos.y as i32);
+            },
             InputEvent::Key(key) if key.down => {
                 let mut state = shared_state.lock().await;
                 

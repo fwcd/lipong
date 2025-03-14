@@ -26,6 +26,10 @@ impl Paddle {
         self.bounds.origin.y += dy;
     }
 
+    pub fn teleport(&mut self, y: i32) {
+        self.bounds.origin.y = y - self.bounds.size.y / 2;
+    }
+
     pub fn in_bounds(&self, rect: Rect<i32>) -> bool {
         let bounds = self.bounds;
         rect.contains(bounds.top_left()) && rect.contains(bounds.bottom_right() - Vec2::new(1, 1))

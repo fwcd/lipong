@@ -31,6 +31,11 @@ impl<const W: usize, const H: usize> State<W, H> {
         };
     }
 
+    pub fn teleport_paddle(&mut self, i: usize, y: i32) {
+        assert!(i < PLAYER_COUNT);
+        self.board.teleport_paddle(i, y);
+    }
+
     pub fn tick(&mut self) {
         if let Some(goal_scorer) = self.board.tick_ball() {
             info!("Goal for player {} (scores: {} : {}), respawning ball...", goal_scorer + 1, self.scores[0], self.scores[1]);
