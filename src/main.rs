@@ -22,6 +22,9 @@ struct Args {
     /// The server URL.
     #[arg(long, env = "LIGHTHOUSE_URL", default_value = LIGHTHOUSE_URL)]
     url: String,
+    /// The ball's speed.
+    #[arg(short, long, default_value_t = 0.75)]
+    ball_speed: f64,
 }
 
 #[tokio::main]
@@ -31,7 +34,7 @@ async fn main() -> Result<()> {
 
     let args = Args::parse();
     let auth = Authentication::new(&args.username, &args.token);
-    let state = Arc::new(Mutex::new(State::<LIGHTHOUSE_COLS, LIGHTHOUSE_ROWS>::new()));
+    let state = Arc::new(Mutex::new(State::<LIGHTHOUSE_COLS, LIGHTHOUSE_ROWS>::new(args.ball_speed)));
 
     let lh = Lighthouse::connect_with_tokio_to(&args.url, auth).await.unwrap();
     info!("Connected to the Lighthouse server");

@@ -16,9 +16,9 @@ pub struct State<const W: usize, const H: usize> {
 }
 
 impl<const W: usize, const H: usize> State<W, H> {
-    pub fn new() -> Self {
+    pub fn new(ball_speed: f64) -> Self {
         Self {
-            board: Board::new(),
+            board: Board::new(ball_speed),
             scores: [0; PLAYER_COUNT],
             paddle_color: Color::WHITE,
             net_color: Color::GRAY,

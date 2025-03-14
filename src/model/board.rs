@@ -8,10 +8,11 @@ use super::{Ball, Paddle, PLAYER_COUNT};
 pub struct Board<const W: usize, const H: usize> {
     paddles: [Paddle; PLAYER_COUNT],
     ball: Ball,
+    initial_ball_speed: f64,
 }
 
 impl<const W: usize, const H: usize> Board<W, H> {
-    pub fn new() -> Self {
+    pub fn new(initial_ball_speed: f64) -> Self {
         let paddle_size = Vec2::new(1, H as i32 / 4);
         let padding = 1;
 
@@ -20,7 +21,8 @@ impl<const W: usize, const H: usize> Board<W, H> {
                 Paddle::new(Rect::new(Self::bounds().center_left() + Vec2::new(padding, 0), paddle_size)),
                 Paddle::new(Rect::new(Self::bounds().center_right() - Vec2::new(padding + 1, 0), paddle_size)),
             ],
-            ball: Self::new_ball(),
+            ball: Self::new_ball(initial_ball_speed),
+            initial_ball_speed,
         }
     }
 
@@ -28,8 +30,7 @@ impl<const W: usize, const H: usize> Board<W, H> {
         Rect::new(Vec2::ZERO, Vec2::new(W as i32, H as i32))
     }
 
-    fn new_ball() -> Ball {
-        let speed = 0.75;
+    fn new_ball(speed: f64) -> Ball {
         let angle_range = PI * 0.2;
         let mut angle = rand::random_range((-angle_range)..=angle_range);
         if rand::random() {
@@ -49,7 +50,7 @@ impl<const W: usize, const H: usize> Board<W, H> {
     }
 
     pub fn respawn_ball(&mut self) {
-        self.ball = Self::new_ball();
+        self.ball = Self::new_ball(self.initial_ball_speed);
     }
 
     pub fn tick_ball(&mut self) -> Option<usize> {
