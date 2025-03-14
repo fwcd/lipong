@@ -29,7 +29,7 @@ impl<const W: usize, const H: usize> Board<W, H> {
     }
 
     fn new_ball() -> Ball {
-        let speed = 0.3;
+        let speed = 0.75;
         let angle_range = PI * 0.2;
         let mut angle = rand::random_range((-angle_range)..=angle_range);
         if rand::random() {
